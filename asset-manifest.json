@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/Instagram-vendors-scam/static/css/main.058a0b07.css",
+    "main.js": "/Instagram-vendors-scam/static/js/main.14d2843b.js",
+    "static/media/verified-vendors.PNG": "/Instagram-vendors-scam/static/media/verified-vendors.7b0535b550e64f17e8d3.PNG",
+    "static/media/sign-up-KYC.PNG": "/Instagram-vendors-scam/static/media/sign-up-KYC.3d77a657d22f99199deb.PNG",
+    "static/media/search-vendors.PNG": "/Instagram-vendors-scam/static/media/search-vendors.4eb81414da4e4ecb0e57.PNG",
+    "index.html": "/Instagram-vendors-scam/index.html",
+    "main.058a0b07.css.map": "/Instagram-vendors-scam/static/css/main.058a0b07.css.map",
+    "main.14d2843b.js.map": "/Instagram-vendors-scam/static/js/main.14d2843b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.058a0b07.css",
+    "static/js/main.14d2843b.js"
+  ]
+}
