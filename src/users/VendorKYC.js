@@ -41,13 +41,13 @@ function VendorKYC() {
         />
         <label className="flex  items-center justify-around w-auto h-auto border-2 border-dashed rounded-lg bg-slate-50 p-4">
           <div className=" flex flex-col justify-center items-center cursor-pointer w-1/2 sm:w-52   h-52 bg-white border-4 rounded-lg p-4">
-            <img className="" src={Userimg} />
+            <img className="" src={Userimg} alt="your face" />
             <p className="text-center font-bold">Upload photo</p>
             <input className="hidden" type="file" placeholder="" />
           </div>
           <div className="flex flex-col justify-center items-center cursor-pointer w-1/2 sm:w-52   h-52 bg-white border-4 rounded-lg p-4 ">
-            <img className="" src={Image1} />
-            <p className="text-center font-bold">Upload image</p>
+            <img className="" src={Image1}  alt="your product"/>
+            <p className="text-center font-bold">Upload product</p>
             <input className="hidden" type="file" placeholder=""/>
           </div>
         </label>
