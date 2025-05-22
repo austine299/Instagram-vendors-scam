@@ -13,14 +13,21 @@ function Dashboard() {
   const navigate = useNavigate();
   const [user, setUser] = useState("");
   const [account, setAccount] = useState([]);
-  const [active, setActive] = useState(false);
+  const [activeSearch, setActiveSearch] = useState(false);
+  const [activeBusi, setActiveBusi] = useState(false);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const inputRef = useRef(null);
 
-  const handleActive = () => {
-    setActive(!active);
+  const handleActiveSearch = () => {
+    setActiveSearch(true);
+    setActiveBusi(false);
+  };
+
+  const handleActivebusiness = () => {
+    setActiveBusi(true);
+    setActiveSearch(false);
   };
 
   const handleClick = () => {
@@ -83,9 +90,9 @@ function Dashboard() {
       </h1>
       <div className="flex flex-col sm:flex-row gap-6 items-center justify-center w-full sm:w-1/2">
         <button
-          onClick={() =>{ handleClick();  handleActive() }}
+          onClick={() =>{ handleClick();  handleActiveSearch() }}
           className={
-            active
+            activeSearch
               ? "border-2 bg-blue-700 px-3 py-3 rounded-md w-10/12 hover:bg-blue-500 hover:text-white text-white text-xl font-bold"
               : "border-2 bg-white px-3 py-3 text-center rounded-md w-10/12 hover:bg-blue-500 hover:text-white text-black text-xl font-bold"
           }
@@ -94,8 +101,9 @@ function Dashboard() {
         </button>
         <Link
           to="/kyc"
+          onClick={handleActivebusiness}
           className={
-            !active
+            activeBusi
               ? "border-2 bg-blue-700 px-3 py-3 rounded-md w-10/12 hover:bg-blue-500 hover:text-white text-white text-xl font-bold"
               : "border-2 bg-white px-3 py-3 text-center rounded-md w-10/12 hover:bg-blue-500 hover:text-white text-black text-xl font-bold"
           }
@@ -290,11 +298,11 @@ function Dashboard() {
                 </div>
               </div>
             ) : (
-              <div className="flex sm:flex-row flex-col w-full gap-4 flex-wrap">
+              <div className="flex sm:flex-row md:flex-row flex-col w-full gap-4 flex-wrap">
                 {filteredAccounts.map((users) => (
                   <div
                     key={users._id}
-                    className="bg-white p-4 rounded shadow w-full sm:w-[48%] md:w-[30%]"
+                    className="bg-white p-4 rounded shadow w-full sm:w-full md:w-[32.5%]"
                   >
                     {/* Profile Image */}
                     {users.profile ? (
@@ -334,8 +342,8 @@ function Dashboard() {
                         <div className="">not verified ❌</div>
                       )}
                     </div>
-                    <div className="flex justify-between p-4 w-full">
-                      <div className="w-2/3">
+                    <div className="flex justify-between gap-2 w-full">
+                      <div className="w-2/3 flex flex-col gap-4">
                         {users.instagramLink ? (
                           <a
                             href={users.instagramLink}
@@ -358,21 +366,21 @@ function Dashboard() {
                             <span className="">No Link Provided</span>
                           </span>
                         )}
-                        <p className="font-semibold">✍ {users.businessName}</p>
-                        <p className="font-semibold">🏠 {users.shopAddress}</p>
-                        <p className="font-semibold">📧 {users.email}</p>
-                        <p className="font-semibold">📞 {users.phoneNumber}</p>
+                        <p className="font-semibold flex items-center gap-3"><span className="">✍</span> {users.businessName}</p>
+                        <p className="font-semibold flex items-center gap-3"><span className="">🏠</span> {users.shopAddress}</p>
+                        <p className="font-semibold flex items-center gap-3"><span className="">📧</span> {users.email}</p>
+                        <p className="font-semibold flex items-center gap-3"><span className="">📞</span> {users.phoneNumber}</p>
                         {/* Product Image */}
                       </div>
-                      {user.productImage ? (
-                        <>
-                          <p className="font-semibold">My product image</p>
+                      {users.productImage ? (
+                        <div className=" flex flex-col">
+                          <p className="font-semibold"><strong>My product image</strong></p>
                           <img
-                            src={`data:image/png;base64,${user.productImage}`}
+                            src={`data:image/png;base64,${users.productImage}`}
                             alt="Product"
-                            className="w-full h-40 object-cover mt-4 border"
+                            className="w-full h-40 object-cover mt-4 border rounded-md"
                           />
-                        </>
+                        </div>
                       ) : (
                         <div className="w-24 h-24 mt-4 flex items-center justify-center border text-sm text-gray-400">
                           No Product Image
