@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/Instagram-vendors-scam/static/css/main.9bd396ce.css",
-    "main.js": "/Instagram-vendors-scam/static/js/main.c1901b33.js",
-    "static/media/instagram.png": "/Instagram-vendors-scam/static/media/instagram.e2e5831fc2c67d3e0642.png",
-    "static/media/image.png": "/Instagram-vendors-scam/static/media/image.376b4190118777d6fde1.png",
-    "static/media/verified-vendors.PNG": "/Instagram-vendors-scam/static/media/verified-vendors.7b0535b550e64f17e8d3.PNG",
-    "static/media/sign-up-KYC.PNG": "/Instagram-vendors-scam/static/media/sign-up-KYC.3d77a657d22f99199deb.PNG",
-    "static/media/search-vendors.PNG": "/Instagram-vendors-scam/static/media/search-vendors.4eb81414da4e4ecb0e57.PNG",
-    "static/media/verify.PNG": "/Instagram-vendors-scam/static/media/verify.1d920ae5196d5a583ba5.PNG",
-    "index.html": "/Instagram-vendors-scam/index.html",
-    "main.9bd396ce.css.map": "/Instagram-vendors-scam/static/css/main.9bd396ce.css.map",
-    "main.c1901b33.js.map": "/Instagram-vendors-scam/static/js/main.c1901b33.js.map"
+    "main.css": "./static/css/main.eded228a.css",
+    "main.js": "./static/js/main.a1de0220.js",
+    "static/media/instagram.png": "./static/media/instagram.e2e5831fc2c67d3e0642.png",
+    "static/media/image.png": "./static/media/image.376b4190118777d6fde1.png",
+    "static/media/verified-vendors.PNG": "./static/media/verified-vendors.7b0535b550e64f17e8d3.PNG",
+    "static/media/sign-up-KYC.PNG": "./static/media/sign-up-KYC.3d77a657d22f99199deb.PNG",
+    "static/media/search-vendors.PNG": "./static/media/search-vendors.4eb81414da4e4ecb0e57.PNG",
+    "static/media/verify.PNG": "./static/media/verify.1d920ae5196d5a583ba5.PNG",
+    "index.html": "./index.html",
+    "main.eded228a.css.map": "./static/css/main.eded228a.css.map",
+    "main.a1de0220.js.map": "./static/js/main.a1de0220.js.map"
   },
   "entrypoints": [
-    "static/css/main.9bd396ce.css",
-    "static/js/main.c1901b33.js"
+    "static/css/main.eded228a.css",
+    "static/js/main.a1de0220.js"
   ]
 }
