@@ -41,6 +41,7 @@ function Dashboard() {
   useEffect(() => {
     axios
       .get("https://instagram-vendors-scam.onrender.com/vendors")
+
       .then((res) => {
         console.log(res.data);
         setAccount(res.data);
