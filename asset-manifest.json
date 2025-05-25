@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Instagram-vendors-scam/static/css/main.20fa9add.css",
-    "main.js": "/Instagram-vendors-scam/static/js/main.e58179c1.js",
+    "main.js": "/Instagram-vendors-scam/static/js/main.9ad2db9d.js",
     "static/media/instagram.png": "/Instagram-vendors-scam/static/media/instagram.e2e5831fc2c67d3e0642.png",
     "static/media/image.png": "/Instagram-vendors-scam/static/media/image.376b4190118777d6fde1.png",
     "static/media/verified-vendors.PNG": "/Instagram-vendors-scam/static/media/verified-vendors.7b0535b550e64f17e8d3.PNG",
@@ -10,10 +10,10 @@
     "static/media/verify.PNG": "/Instagram-vendors-scam/static/media/verify.1d920ae5196d5a583ba5.PNG",
     "index.html": "/Instagram-vendors-scam/index.html",
     "main.20fa9add.css.map": "/Instagram-vendors-scam/static/css/main.20fa9add.css.map",
-    "main.e58179c1.js.map": "/Instagram-vendors-scam/static/js/main.e58179c1.js.map"
+    "main.9ad2db9d.js.map": "/Instagram-vendors-scam/static/js/main.9ad2db9d.js.map"
   },
   "entrypoints": [
     "static/css/main.20fa9add.css",
-    "static/js/main.e58179c1.js"
+    "static/js/main.9ad2db9d.js"
   ]
 }
