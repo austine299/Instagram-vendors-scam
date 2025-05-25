@@ -298,11 +298,11 @@ function Dashboard() {
                 </div>
               </div>
             ) : (
-              <div className="flex sm:flex-row md:flex-row flex-col w-full gap-4 flex-wrap">
+              <div className="flex sm:flex-row md:flex-row flex-col justify-strech w-full gap-6 flex-wrap">
                 {filteredAccounts.map((users) => (
                   <div
                     key={users._id}
-                    className="bg-white p-4 rounded shadow w-full sm:w-full md:w-[32.5%]"
+                    className="bg-white p-4 rounded shadow w-full sm:w-full md:w-[30.5%]"
                   >
                     {/* Profile Image */}
                     {users.profile ? (
