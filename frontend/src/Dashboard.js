@@ -39,8 +39,9 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    axios 
-      .get("http://localhost:5000/vendors")
+    axios
+      .get("https://instagram-vendors-scam.onrender.com/vendors")
+
       .then((res) => {
         console.log(res.data);
         setAccount(res.data);
@@ -52,7 +53,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchUser = async () => {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/myAccount", {
+      const res = await axios.get("https://instagram-vendors-scam.onrender.com/myAccount", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUser(res.data);
