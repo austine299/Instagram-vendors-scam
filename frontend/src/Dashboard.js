@@ -39,7 +39,7 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    axios
+    axios 
       .get("http://localhost:5000/vendors")
       .then((res) => {
         console.log(res.data);
