@@ -19,6 +19,11 @@ app.use(
   })
 );
 
+app.options("*", cors({
+  origin: "https://instagram-vendors-frontend.onrender.com",
+  credentials: true,
+}));
+
 connectDB();
 
 const SECRET = "secret123";
