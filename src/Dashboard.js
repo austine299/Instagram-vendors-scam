@@ -302,11 +302,11 @@ function Dashboard() {
                 {filteredAccounts.map((users) => (
                   <div
                     key={users._id}
-                    className="bg-white p-4 rounded shadow w-full sm:w-full md:w-[32.5%]"
+                    className="bg-white p-4 rounded shadow w-full sm:w-full md:w-[30.5%]"
                   >
                     {/* Profile Image */}
                     {users.profile ? (
-                      <img
+                      <img 
                         src={`data:image/jpeg;base64,${users.profile}`}
                         alt="Profile"
                         className="w-24 h-24 object-cover rounded-full mt-4 border"
