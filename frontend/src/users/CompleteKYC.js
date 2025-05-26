@@ -34,7 +34,7 @@ function CompleteKYC() {
     const token = localStorage.getItem("token");
 
     axios
-      .get("https://instagram-vendors-scam.onrender.com/myAccount", {
+      .get("https://instagram-vendors-server.onrender.com/myAccount", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setUserForm(res.data))
@@ -52,7 +52,7 @@ function CompleteKYC() {
         if (value) formData.append(key, value);
       });
 
-      await axios.put("https://instagram-vendors-scam.onrender.com/profile", formData, {
+      await axios.put("https://instagram-vendors-server.onrender.com/profile", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
