@@ -413,6 +413,16 @@ function Dashboard() {
                     </div>
                     {displayProductId === users._id && (
                       <div className="flex justify-center sm:z-1 absolute sm:w-[29.8%] w-11/12 bg-white">
+                      <span
+                          onClick={() =>
+                            setDisplayProductId(
+                              displayProductId === users._id ? null : users._id
+                            )
+                          }
+                          className="font-bold text-2xl absolute right-2 text-red-300 hover:text-red-500 cursor-pointer "
+                        >
+                          ❌
+                        </span>
                         {users.productImage ? (
                           <div className="flex flex-col w-2/3 mb-5">
                             <p className="sm:text-xl font-semibold">
