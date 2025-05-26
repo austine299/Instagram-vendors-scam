@@ -14,7 +14,7 @@ export default function VendorLogin() {
 
     setLoading(true);
     try {
-      const res = await axios.post("https://instagram-vendors-scam.onrender.com/login", form);
+      const res = await axios.post("https://instagram-vendors-server.onrender.com/login", form);
       const token = res.data.token;
 
       localStorage.setItem("token", token);
