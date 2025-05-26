@@ -192,7 +192,7 @@ function Dashboard() {
                       className="w-24 h-24 object-cover rounded-full mt-4 border"
                     />
                   ) : (
-                    <div className="w-24 h-24 mt-4 flex items-center justify-center border rounded-full text-sm text-gray-400">
+                    <div className="w-24 h-24 mt-4 flex items-center justify-center text-center border rounded-full text-sm text-gray-400">
                       No Profile Image
                     </div>
                   )}
@@ -313,7 +313,7 @@ function Dashboard() {
                         className="w-24 h-24 object-cover rounded-full mt-4 border"
                       />
                     ) : (
-                      <div className="w-24 h-24 mt-4 flex items-center justify-center border rounded-full text-sm text-gray-400">
+                      <div className="w-24 h-24 mt-4 flex items-center justify-center text-center border rounded-full text-sm text-gray-400">
                         No Profile Image
                       </div>
                     )}
@@ -408,7 +408,7 @@ function Dashboard() {
                     className="w-24 h-24 object-cover rounded-full mt-4 border"
                   />
                 ) : (
-                  <div className="w-24 h-24 mt-4 flex items-center justify-center border rounded-full text-sm text-gray-400">
+                  <div className="w-24 h-24 mt-4 flex items-center justify-center text-center border rounded-full text-sm text-gray-400">
                     No Profile Image
                   </div>
                 )}
