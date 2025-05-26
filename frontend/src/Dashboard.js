@@ -51,16 +51,30 @@ function Dashboard() {
   }, []);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const token = localStorage.getItem("token");
-      const res = await axios.get("https://instagram-vendors-server.onrender.com/myAccount", {
+  const fetchUser = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.warn("No token found");
+      return;
+    }
+
+    try {
+      const res = await axios.get("http://localhost:5000/myAccount", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUser(res.data);
-    };
+    } catch (error) {
+      console.error("Failed to fetch user:", error);
+      if (error.response?.status === 403) {
+        // Token invalid or user not authorized
+        handleLogout();
+      }
+    }
+  };
 
-    fetchUser();
-  }, []);
+  fetchUser();
+}, []);
+
 
   const filteredAccounts = account.filter((user) =>
     (user.instagramHandle + user.fullName)
