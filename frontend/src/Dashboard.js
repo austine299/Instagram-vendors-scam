@@ -313,95 +313,123 @@ function Dashboard() {
                 </div>
               </div>
             ) : (
-              <div className="flex sm:flex-row md:flex-row flex-col justify-strech w-full gap-6 flex-wrap">
+               <div className="flex sm:flex-row md:flex-row flex-col w-full gap-4 flex-wrap">
                 {filteredAccounts.map((users) => (
-                  <div
-                    key={users._id}
-                    className="bg-white p-4 rounded shadow w-full sm:w-full md:w-[30.5%]"
-                  >
-                    {/* Profile Image */}
-                    {users.profile ? (
-                      <img
-                        src={`data:image/jpeg;base64,${users.profile}`}
-                        alt="Profile"
-                        className="w-24 h-24 object-cover rounded-full mt-4 border"
-                      />
-                    ) : (
-                      <div className="w-24 h-24 mt-4 flex items-center justify-center text-center border rounded-full text-sm text-gray-400">
-                        No Profile Image
-                      </div>
-                    )}
-                    <div className="flex gap-3 items-center">
-                      <h2 className="text-xl font-bold">{users.fullName}</h2>
-                    </div>{" "}
-                    <div className="flex gap-3 items-center">
-                      <a
-                        href={users.instagramLink}
-                        className="text-xl text-blue-500"
-                      >
-                        @{users.instagramHandle}
-                      </a>
-                      {users.fullName &&
-                      users.instagramHandle &&
-                      users.phoneNumber &&
-                      users.instagramLink &&
-                      users.email &&
-                      users.businessName &&
-                      users.shopAddress &&
-                      users.productImage &&
-                      users.profile !== null ? (
-                        <div className="w-6">
-                          <img className="" src={Verify} />
-                        </div>
-                      ) : (
-                        <div className="">not verified ❌</div>
-                      )}
-                    </div>
-                    <div className="flex justify-between gap-2 w-full">
-                      <div className="w-2/3 flex flex-col gap-4">
-                        {users.instagramLink ? (
+                  <div className="w-full sm:w-full md:w-[30.5%]">
+                    <div
+                      key={users._id}
+                      className="bg-white p-4 rounded shadow w-full sm:w-full"
+                    >
+                      <div className="flex flex-col justify-between gap-4 w-full">
+                        {/* Profile Image */}
+                        {users.profile ? (
+                          <img
+                            src={`data:image/jpeg;base64,${users.profile}`}
+                            alt="Profile"
+                            className="w-24 h-24 object-cover rounded-full mt-4 border"
+                          />
+                        ) : (
+                          <div className="w-24 h-24 mt-4 flex items-center justify-center text-center border rounded-full text-sm text-gray-400">
+                            No Profile Image
+                          </div>
+                        )}
+                        <div className="flex gap-3 items-center">
+                          <h2 className="sm:text-xl font-bold">
+                            {users.fullName}
+                          </h2>
+                        </div>{" "}
+                        <div className="flex gap-3 items-center">
                           <a
                             href={users.instagramLink}
-                            className="text-xl underline text-blue-500 flex gap-2 items-center"
+                            className="sm:text-xl text-blue-500"
                           >
-                            <img
-                              className="w-4 h4"
-                              src={Insta}
-                              alt="insta icon"
-                            />{" "}
-                            <span className="">go to my instagram page</span>
+                            @{users.instagramHandle}
                           </a>
-                        ) : (
-                          <span className="flex gap-2 items-center">
-                            <img
-                              className="w-4 h4"
-                              src={Insta}
-                              alt="insta icon"
-                            />
-                            <span className="">No Link Provided</span>
-                          </span>
-                        )}
-                        <p className="font-semibold flex items-center gap-3"><span className="">✍</span> {users.businessName}</p>
-                        <p className="font-semibold flex items-center gap-3"><span className="">🏠</span> {users.shopAddress}</p>
-                        <p className="font-semibold flex items-center gap-3"><span className="">📧</span> {users.email}</p>
-                        <p className="font-semibold flex items-center gap-3"><span className="">📞</span> {users.phoneNumber}</p>
-                        {/* Product Image */}
+                          {users.fullName &&
+                          users.instagramHandle &&
+                          users.phoneNumber &&
+                          users.instagramLink &&
+                          users.email &&
+                          users.businessName &&
+                          users.shopAddress &&
+                          users.productImage &&
+                          users.profile !== null ? (
+                            <div className="w-6">
+                              <img className="" src={Verify} />
+                            </div>
+                          ) : (
+                            <div className="">not verified ❌</div>
+                          )}
+                        </div>
+                        <div className="w-2/3 flex flex-col gap-4">
+                          {users.instagramLink ? (
+                            <a
+                              href={users.instagramLink}
+                              className="sm:text-xl underline text-blue-500 flex gap-2 items-center"
+                            >
+                              <img
+                                className="w-4 h4"
+                                src={Insta}
+                                alt="insta icon"
+                              />{" "}
+                              <span className="">go to my instagram page</span>
+                            </a>
+                          ) : (
+                            <span className="flex gap-2 items-center">
+                              <img
+                                className="w-4 h4"
+                                src={Insta}
+                                alt="insta icon"
+                              />
+                              <span className="">No Link Provided</span>
+                            </span>
+                          )}
+                          <strong className="sm:font-semibold flex items-center gap-3">
+                            <span className="">✍</span> {users.businessName}
+                          </strong>
+                          <strong className="sm:font-semibold flex items-center gap-3">
+                            <span className="">🏠</span> {users.shopAddress}
+                          </strong>
+                          <strong className="sm:font-semibold flex items-center gap-3">
+                            <span className="">📧</span> {users.email}
+                          </strong>
+                          <strong className="sm:font-semibold flex items-center gap-3">
+                            <span className="">📞</span> {users.phoneNumber}
+                          </strong>
+                          {/* Product Image */}
+                        </div>
                       </div>
-                      {users.productImage ? (
-                        <div className=" flex flex-col">
-                          <p className="font-semibold"><strong>My product image</strong></p>
-                          <img
-                            src={`data:image/png;base64,${users.productImage}`}
-                            alt="Product"
-                            className="w-full h-40 object-cover mt-4 border rounded-md"
-                          />
-                        </div>
-                      ) : (
-                        <div className="w-24 h-24 mt-4 flex items-center justify-center border text-sm text-gray-400">
-                          No Product Image
-                        </div>
-                      )}
+                      <button
+                        className="mt-3"
+                        onClick={() =>
+                          setDisplayProductId(
+                            displayProductId === users._id ? null : users._id
+                          )
+                        }
+                      >
+                        Click to see my product.....
+                      </button>
                     </div>
+                    {displayProductId === users._id && (
+                      <div className="flex justify-center sm:z-1 absolute sm:w-[29.8%] w-11/12 bg-white">
+                        {users.productImage ? (
+                          <div className="flex flex-col w-2/3 mb-5">
+                            <p className="sm:text-xl font-semibold">
+                              <strong>My product image</strong>
+                            </p>
+                            <img
+                              src={`data:image/png;base64,${users.productImage}`}
+                              alt="Product"
+                              className="w-full h-40 object-cover mt-4 border rounded-md"
+                            />
+                          </div>
+                        ) : (
+                          <div className="w-24 h-24 mt-4 flex items-center justify-center border text-sm text-gray-400">
+                            No Product Image
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
