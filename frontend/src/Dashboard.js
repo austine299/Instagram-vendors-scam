@@ -17,6 +17,7 @@ function Dashboard() {
   const [activeBusi, setActiveBusi] = useState(false);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
+  const [displayProductId, setDisplayProductId] = useState(false);
   const [loading, setLoading] = useState(true);
   const inputRef = useRef(null);
 
