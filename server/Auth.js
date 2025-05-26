@@ -20,10 +20,6 @@ app.use(
   })
 );
 
-// Optional, but helpful for some browsers:
-app.options("*", cors());
-
-
 const SECRET = "secret123";
 
 // ✅ SIGNUP
