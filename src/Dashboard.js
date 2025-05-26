@@ -305,7 +305,7 @@ function Dashboard() {
                 </div>
               </div>
             ) : (
-              <div className="flex sm:flex-row md:flex-row flex-col w-full gap-4 flex-wrap">
+              <div className="flex sm:flex-row md:flex-row justify-center flex-col w-full gap-4 flex-wrap">
                 {filteredAccounts.map((users) => (
                   <div className="w-full sm:w-full md:w-[30.5%]">
                     <div
