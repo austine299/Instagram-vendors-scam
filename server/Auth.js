@@ -14,15 +14,10 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://instagram-vendors-frontend.onrender.com",
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
-
-app.options("*", cors({
-  origin: "https://instagram-vendors-frontend.onrender.com",
-  credentials: true,
-}));
 
 connectDB();
 
@@ -166,5 +161,11 @@ app.get("/vendors", async (req, res) => {
     res.status(500).json({ msg: "Failed to fetch data" });
   }
 });
+
+// ✅ Start the server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () =>
+  console.log(`✅ Server running on http://localhost:${PORT}`)
+);
 
 export default app;
