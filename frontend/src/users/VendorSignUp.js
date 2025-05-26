@@ -43,7 +43,7 @@ function VendorSignUp() {
     formData.append("productImage", form.productImage);
 
     try {
-      await axios.post("https://instagram-vendors-server.onrender.com", formData, {
+      await axios.post("https://instagram-vendors-server.onrender.com/signup", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
