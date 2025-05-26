@@ -28,7 +28,7 @@ export default function VendorLogin() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-12 bg-slate-50">
+    <div className="flex flex-col items-center justify-center sm:p-12 bg-slate-50">
       <div className="w-full">
         <Link to="/">
           <ArrowLeftIcon className="h-8 hover:font-bold" />
