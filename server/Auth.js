@@ -12,12 +12,18 @@ const upload = multer({ storage });
 
 const app = express();
 app.use(express.json());
+import cors from "cors";
+
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://instagram-vendors-frontend.onrender.com"],
-    credentials: true,
+    origin: "https://instagram-vendors-frontend.onrender.com", // ✅ allow your frontend
+    credentials: true, // ✅ important if using cookies or authorization headers
   })
 );
+
+// Optional, but helpful for some browsers:
+app.options("*", cors());
+
 
 const SECRET = "secret123";
 
