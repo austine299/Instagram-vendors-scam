@@ -101,7 +101,7 @@ function Dashboard() {
           </Link>
         </div>
       )}
-      <h1 className="text-4xl font-bold text-center">
+      <h1 className="sm:text-4xl font-bold text-center">
         Protect Yourself From Scams — Verify Instagram Vendors
       </h1>
       <div className="flex flex-col sm:flex-row gap-6 items-center justify-center w-full sm:w-1/2">
