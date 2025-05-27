@@ -14,7 +14,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://instagram-vendors-frontend.onrender.com"],
+    origin: ["http://localhost:3001", "https://instagram-vendors-frontend.onrender.com"],
     credentials: true,
   })
 );
@@ -162,10 +162,5 @@ app.get("/vendors", async (req, res) => {
   }
 });
 
-// ✅ Start the server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () =>
-  console.log(`✅ Server running on http://localhost:${PORT}`)
-);
 
 export default app;
