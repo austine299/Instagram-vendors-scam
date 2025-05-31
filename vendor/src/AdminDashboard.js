@@ -26,7 +26,7 @@ function AdminDashboard({ handleLogout, fetchUser}) {
       }
 
       try {
-        const res = await axios.get("http://localhost:5000/myAccount", {
+        const res = await axios.get("https://instagram-vendors-vendor.onrender.com/myAccount", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUser(res.data);
