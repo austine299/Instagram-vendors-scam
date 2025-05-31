@@ -15,7 +15,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: ["https://instagram-vendors-frontend.onrender.com", "https://instagram-vendors-server.onrender.com"], // ✅ allow your frontend
+    origin: ["https://instagram-vendors-frontend.onrender.com", "https://instagram-vendors-vendor.onrender.com"], // ✅ allow your frontend
     credentials: true, // ✅ important if using cookies or authorization headers
   })
 );
