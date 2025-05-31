@@ -14,22 +14,33 @@ function App() {
   const [activeSignUp, setActiveSignUp] = useState(false);
   const [activeSignIn, setActiveSignIn] = useState(false);
   const [activeBusi, setActiveBusi] = useState(false);
+  const [activeHome, setActiveHome] = useState(false);
+
+  const handleActiveHome = () => {
+    setActiveBusi(true);
+    setActiveBusi(false);
+    setActiveSignUp(false);
+    setActiveSignIn(false);
+  };
 
   const handleActivebusiness = () => {
     setActiveBusi(true);
     setActiveSignUp(false);
     setActiveSignIn(false);
+    setActiveBusi(false);
   };
 
   const handleActiveSignUP = () => {
     setActiveSignUp(true);
     setActiveSignIn(false);
     setActiveBusi(false);
+    setActiveBusi(false);
   };
 
   const handleActiveSignIn = () => {
     setActiveSignIn(true);
     setActiveSignUp(false);
+    setActiveBusi(false);
     setActiveBusi(false);
   };
 
@@ -75,6 +86,7 @@ function App() {
           activeBusi={activeBusi}
           activeSignIn={activeSignIn}
           activeSignUp={activeSignUp}
+          activeHome={activeHome}
         />
         <Routes>
           <Route
