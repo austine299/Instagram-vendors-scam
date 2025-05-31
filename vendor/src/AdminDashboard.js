@@ -3,29 +3,19 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Verify from "./images/verify.PNG";
 import Insta from "./images/instagram.png";
+import Navbar from "./Navbar.js";
 
-function AdminDashboard() {
+function AdminDashboard({ handleLogout, fetchUser}) {
   const navigate = useNavigate();
   const [user, setUser] = useState("");
   const [account, setAccount] = useState([]);
-  const [activeSearch, setActiveSearch] = useState(false);
-  const [activeBusi, setActiveBusi] = useState(false);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(true);
-  const inputRef = useRef(null);
 
-  const handleActivebusiness = () => {
-    setActiveBusi(true);
-    setActiveSearch(false);
-  };
-
-  const handleClick = () => {
-    inputRef.current?.focus();
-  };
-  const handleLogout = () => {
-    localStorage.removeItem("token"); // Remove the JWT
-    navigate("/login");
-  };
+  // const handleLogout = () => {
+  //   localStorage.removeItem("token"); // Remove the JWT
+  //   navigate("/login");
+  // };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -52,6 +42,10 @@ function AdminDashboard() {
     fetchUser();
   }, []);
 
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
   const filteredAccounts = account.filter((user) =>
     (user.instagramHandle + user.fullName)
       .toLowerCase()
@@ -60,52 +54,11 @@ function AdminDashboard() {
 
   return (
     <div>
-      <div className="w-full p-4 justify-between bg-[url(./images/instagram-bg.jpg)] bg-cover bg-center h-auto">
-        <div className="flex justify-start flex-row-reverse">
-          <div className="flex flex-row-reverse justify-start gap-4 w-full sm:w-1/2 bg-navbg p-4 mt-5 rounded-md">
-            {user ? (
-              <button
-                className="flex justify-center items-center px-4 text-white font-bold hover:bg-blue-400 rounded-md"
-                onClick={handleLogout}
-              >
-                Log out
-              </button>
-            ) : (
-              <Link
-                to="/login"
-                className=" flex justify-center items-center px-4 sm:text-2xl text-white font-bold hover:bg-blue-400 rounded-md"
-              >
-                Log in
-              </Link>
-            )}
-            {user ? (
-              <></>
-            ) : (
-              <Link
-                to="/signup"
-                className="flex justify-center items-center px-4 underline-0 text-white hover:bg-blue-400 rounded-md text-center sm:text-2xl font-semibold cursor-pointer"
-              >
-                sign up
-              </Link>
-            )}
-            <Link
-              to="/kyc"
-              onClick={handleActivebusiness}
-              className={
-                activeBusi
-                  ? "px-3 py-3 rounded-md hover:bg-blue-400  text-white sm:text-xl font-bold"
-                  : "bg-blue-400 px-3 py-3 text-center rounded-md  text-white text-2sm:xl font-bold"
-              }
-            >
-              Verify
-            </Link>
-          </div>
-        </div>
-
+      <div className="w-full p-4 justify-between bg-cover bg-slate-400 bg-center h-auto">
         {user ? (
           <></>
         ) : (
-          <div className="mt-20 flex flex-col items-center bg-opacity-50 bg-slate-400 p-4">
+          <div className="mt-20 flex flex-col items-center bg-opacity-50 bg-slate-400 gap-8 p-4">
             <h1 className="font-bold text-2xl sm:text-3xl">
               How{" "}
               <span className="text-instacolor font-extrabold text-3xl sm:text-4xl">

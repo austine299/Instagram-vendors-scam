@@ -36,9 +36,9 @@ function Dashboard() {
     inputRef.current?.focus();
   };
 
-  const gotoVendors =()=>{
+  const gotoVendors = () => {
     vendors.current?.focus();
-  }
+  };
   const handleLogout = () => {
     localStorage.removeItem("token"); // Remove the JWT
     navigate("/login");
@@ -104,8 +104,8 @@ function Dashboard() {
             }}
             className={
               activeSearch
-                ? "border-2 bg-blue-700 px-3 py-3 rounded-md w-10/12 hover:bg-blue-500 hover:text-white text-white text-xl font-bold"
-                : "border-2 bg-white px-3 py-3 text-center rounded-md w-10/12 hover:bg-blue-500 hover:text-white text-black text-xl font-bold"
+                ? "border-2 bg-blue-700 px-3 py-3 rounded-md w-fit hover:bg-blue-500 hover:text-white text-white text-xl font-bold"
+                : "border-2 bg-white px-3 py-3 text-center rounded-md w-fit hover:bg-blue-500 hover:text-white text-black text-xl font-bold"
             }
           >
             Search Vendors
@@ -113,48 +113,17 @@ function Dashboard() {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-5 sm:gap-14 justify-center items-center bg-white bg-opacity-30 w-full p-10">
-          <div
-            className="flex flex-col items-center text-center w-full sm:w-1/5 cursor-pointer"
-            onClick={handleClick}
-          >
-            <img
-              className="w-full rounded-md"
-              src={SearchVendor}
-              alt="Search"
+          {/* Search Bar */}
+          <div className="flex items-center gap-3 border-2 bg-white w-full sm:w-1/2 h-12 rounded-md px-2">
+            <MagnifyingGlassIcon className="h-6 text-gray-500" />
+            <input
+              ref={inputRef}
+              className="w-full h-full outline-none"
+              placeholder="Enter Instagram handle or Business name"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
             />
-            <p className="text-center text-2xl font-semibold hover:text-white">
-              Search for <br /> Instagram vendors
-            </p>
           </div>
-
-          <span className="text-6xl text-pink-500 hidden sm:block">&#8594;</span>
-          <span className="text-5xl text-pink-500  sm:hidden">&#8595;</span>
-          {/* 
-          <span className="text-5xl hidden sm:block">&#8594;</span>
-          <span className="text-5xl sm:hidden">&#8595;</span>  */}
-
-          <div onClick={gotoVendors} className="flex flex-col text-center w-full   sm:w-1/5">
-            <img
-              className="w-full rounded-md"
-              src={VerifiedVendors}
-              alt="Verified Vendors"
-            />
-            <p  className="text-center text-2xl font-semibold">
-              View verified vendors and avoid scams
-            </p>
-          </div>
-        </div>
-
-        {/* Search Bar */}
-        <div className="flex items-center gap-3 border-2 bg-white w-full sm:w-1/2 h-12 rounded-md px-2">
-          <MagnifyingGlassIcon className="h-6 text-gray-500" />
-          <input
-            ref={inputRef}
-            className="w-full h-full outline-none"
-            placeholder="Enter Instagram handle or Business name"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
         </div>
       </div>
 
