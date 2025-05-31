@@ -14,7 +14,7 @@ export default function VendorLogin() {
 
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:5000/login", form);
+      const res = await axios.post("https://instagram-vendors-vendor.onrender.com/login", form);
       const token = res.data.token;
 
       localStorage.setItem("token", token);
