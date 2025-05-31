@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
 
-const Navbar = ({user, handleLogout, handleActiveSignIn, handleActiveSignUP, handleActivebusiness, activeBusi, activeSignIn, activeSignUp}) =>{
+const Navbar = ({user, handleLogout, handleActiveSignIn, handleActiveSignUP, handleActivebusiness, activeBusi, activeSignIn, activeSignUp,activeHome}) =>{
     
     return(
         <div className="flex justify-start flex-row-reverse">
@@ -51,6 +51,18 @@ const Navbar = ({user, handleLogout, handleActiveSignIn, handleActiveSignUP, han
               }
             >
               Verify
+            </Link
+                 to="/"
+              onClick={handleActivebusiness}
+              className={
+                activeHome
+                  ? "p-3 flex justify-center items-center px-4 sm:text-2xl text-white font-bold bg-blue-400 rounded-md"
+                  : "p-3 flex justify-center items-center px-4 sm:text-2xl hover:text-white text-black font-bold hover:bg-blue-400 rounded-md"
+              }
+            >      
+            >
+            <Link>
+                  
             </Link>
           </div>
         </div>
