@@ -51,18 +51,17 @@ const Navbar = ({user, handleLogout, handleActiveSignIn, handleActiveSignUP, han
               }
             >
               Verify
-            </Link
-                 to="/"
+            </Link>
+            <Link                 
+              to="/"
               onClick={handleActivebusiness}
               className={
                 activeHome
                   ? "p-3 flex justify-center items-center px-4 sm:text-2xl text-white font-bold bg-blue-400 rounded-md"
                   : "p-3 flex justify-center items-center px-4 sm:text-2xl hover:text-white text-black font-bold hover:bg-blue-400 rounded-md"
               }
-            >      
-            >
-            <Link>
-                  
+            >   
+               Home   
             </Link>
           </div>
         </div>
