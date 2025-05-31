@@ -46,7 +46,7 @@ function Dashboard() {
 
   useEffect(() => {
     axios
-      .get("https://instagram-vendors-vendor.onrender.com/vendors")
+      .get("https://instagram-vendors-server.onrender.com/vendors")
 
       .then((res) => {
         console.log(res.data);
@@ -65,7 +65,7 @@ function Dashboard() {
       }
 
       try {
-        const res = await axios.get("https://instagram-vendors-vendor.onrender.com/myAccount", {
+        const res = await axios.get("https://instagram-vendors-server.onrender.com/myAccount", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUser(res.data);
