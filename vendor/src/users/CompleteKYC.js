@@ -22,6 +22,11 @@ function CompleteKYC() {
   });
   const navigate = useNavigate();
 
+  const baseURL =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:5000"
+      : "https://instagram-vendors-server.onrender.com";
+
   useEffect(() => {
     const token = localStorage.getItem("token");
 
@@ -34,7 +39,7 @@ function CompleteKYC() {
     const token = localStorage.getItem("token");
 
     axios
-      .get("https://instagram-vendors-server.onrender.com/myAccount", {
+      .get(`${baseURL}/myAccount`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setUserForm(res.data))
@@ -52,12 +57,16 @@ function CompleteKYC() {
         if (value) formData.append(key, value);
       });
 
-      await axios.put("https://instagram-vendors-server.onrender.com/profile", formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      await axios.put(
+        "https://instagram-vendors-server.onrender.com/profile",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       alert("Profile updated!");
     } catch (error) {
@@ -84,7 +93,7 @@ function CompleteKYC() {
           placeholder="Instagram Handle"
           onChange={(e) =>
             setUserForm({ ...userform, instagramHandle: e.target.value })
-          } 
+          }
         />
         <input
           className="h-12 p-3 border-4 rounded-md"

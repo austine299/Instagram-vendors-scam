@@ -24,6 +24,10 @@ function AdminDashboard({ handleLogout, fetchUser }) {
     user.productImage &&
     user.profile !== null;
 
+  const baseURL =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:5000"
+      : "https://instagram-vendors-server.onrender.com";
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -34,7 +38,7 @@ function AdminDashboard({ handleLogout, fetchUser }) {
       }
 
       try {
-        const res = await axios.get("http://localhost:5000/myAccount", {
+        const res = await axios.get(`${baseURL}/myAccount`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUser(res.data);
@@ -66,8 +70,7 @@ function AdminDashboard({ handleLogout, fetchUser }) {
         {!user ? (
           <section className="mt-20 text-center space-y-8 bg-white rounded-lg shadow-lg p-6">
             <h1 className="text-3xl sm:text-4xl font-bold leading-snug">
-              How{" "}
-              <span className="text-instacolor">Instagram Vendors</span> Can
+              How <span className="text-instacolor">Instagram Vendors</span> Can
               Make Their Customers{" "}
               <span className="text-instacolor">Happy</span>
             </h1>
@@ -114,8 +117,8 @@ function AdminDashboard({ handleLogout, fetchUser }) {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <img src={Insta} alt="Insta" className="w-4 h-4" />
-                    @{user.instagramHandle}
+                    <img src={Insta} alt="Insta" className="w-4 h-4" />@
+                    {user.instagramHandle}
                   </a>
                 </p>
                 <p className="font-medium">✍ {user.businessName}</p>
@@ -171,7 +174,7 @@ function AdminDashboard({ handleLogout, fetchUser }) {
           </div>
         )}
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
@@ -189,8 +192,7 @@ const tips = [
   },
   {
     title: "3. Share Real Reviews",
-    description:
-      "Showcase customer feedback. Real reviews build confidence.",
+    description: "Showcase customer feedback. Real reviews build confidence.",
   },
   {
     title: "4. Offer Smooth Payment Options",
@@ -204,8 +206,7 @@ const tips = [
   },
   {
     title: "6. Neat Packaging Matters",
-    description:
-      "Professional packaging improves perception and adds delight.",
+    description: "Professional packaging improves perception and adds delight.",
   },
   {
     title: "7. Handle Complaints Gracefully",
@@ -219,8 +220,7 @@ const tips = [
   },
   {
     title: "9. Stay Active & Authentic",
-    description:
-      "Engage often. Share behind-the-scenes, and be human.",
+    description: "Engage often. Share behind-the-scenes, and be human.",
   },
   {
     title: "10. Keep Improving",
@@ -228,6 +228,5 @@ const tips = [
       "Ask for feedback. Keep adjusting and showing customers you care.",
   },
 ];
-
 
 export default AdminDashboard;

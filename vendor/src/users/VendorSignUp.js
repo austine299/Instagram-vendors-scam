@@ -42,8 +42,15 @@ function VendorSignUp() {
     formData.append("profile", form.profile); // input[type="file"]
     formData.append("productImage", form.productImage);
 
+
+    const baseURL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:5000"
+    : "https://instagram-vendors-server.onrender.com";
+    
+
     try {
-      await axios.post("http://localhost:5000/signup", formData, {
+      await axios.post(`${baseURL}/signup`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

@@ -14,16 +14,26 @@ function App() {
   const [activeSignUp, setActiveSignUp] = useState(false);
   const [activeSignIn, setActiveSignIn] = useState(false);
   const [activeBusi, setActiveBusi] = useState(false);
+  const [activeHome, setActiveHome] = useState(false);
+
+  const handleActiveHome = () => {
+    setActiveBusi(true);
+    setActiveBusi(false);
+    setActiveSignUp(false);
+    setActiveSignIn(false);
+  };
 
   const handleActivebusiness = () => {
     setActiveBusi(true);
     setActiveSignUp(false);
     setActiveSignIn(false);
+    setActiveBusi(false);
   };
 
   const handleActiveSignUP = () => {
     setActiveSignUp(true);
     setActiveSignIn(false);
+    setActiveBusi(false);
     setActiveBusi(false);
   };
 
@@ -31,8 +41,15 @@ function App() {
     setActiveSignIn(true);
     setActiveSignUp(false);
     setActiveBusi(false);
+    setActiveBusi(false);
   };
 
+
+  const baseURL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:5000"
+    : "https://instagram-vendors-server.onrender.com";
+    
   
     const fetchUser = async () => {
       const token = localStorage.getItem("token");
@@ -42,7 +59,7 @@ function App() {
       }
 
       try {
-        const res = await axios.get("http://localhost:5000/myAccount", {
+        const res = await axios.get(`${baseURL}/myAccount`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUser(res.data);
@@ -75,6 +92,7 @@ function App() {
           activeBusi={activeBusi}
           activeSignIn={activeSignIn}
           activeSignUp={activeSignUp}
+          activeHome={activeHome}
         />
         <Routes>
           <Route

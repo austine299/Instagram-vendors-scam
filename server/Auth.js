@@ -15,7 +15,12 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3001"], // ✅ allow your frontend
+    origin: [
+      "https://instagram-vendors-frontend.onrender.com",
+      "https://instagram-vendors-vendor.onrender.com",
+      "http://localhost:3000",
+      "http://localhost:3001",
+    ], // ✅ allow your frontend
     credentials: true, // ✅ important if using cookies or authorization headers
   })
 );
@@ -73,7 +78,7 @@ app.post(
 // ✅ LOGIN
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ email});
+  const user = await User.findOne({ email });
 
   if (!user) return res.status(400).json({ msg: "Invalid handle" });
 
@@ -85,7 +90,6 @@ app.post("/login", async (req, res) => {
 
   // res.json({ handle: user.instagramHandle, msg: "Login successful" });
 });
-
 
 app.get("/myAccount", async (req, res) => {
   const auth = req.headers.authorization;
@@ -100,7 +104,6 @@ app.get("/myAccount", async (req, res) => {
     res.sendStatus(403);
   }
 });
-
 
 app.put(
   "/profile",
@@ -121,7 +124,8 @@ app.put(
         updates.profile = req.files.profile[0].buffer.toString("base64");
       }
       if (req.files?.productImage?.[0]) {
-        updates.productImage = req.files.productImage[0].buffer.toString("base64");
+        updates.productImage =
+          req.files.productImage[0].buffer.toString("base64");
       }
 
       // If password is being updated, hash it
@@ -129,7 +133,9 @@ app.put(
         updates.password = await bcrypt.hash(updates.password, 10);
       }
 
-      const updatedUser = await User.findByIdAndUpdate(decoded.id, updates, { new: true }).select("-password");
+      const updatedUser = await User.findByIdAndUpdate(decoded.id, updates, {
+        new: true,
+      }).select("-password");
       res.json(updatedUser);
     } catch (err) {
       console.error(err);
@@ -137,8 +143,6 @@ app.put(
     }
   }
 );
-
-
 
 app.get("/vendors", async (req, res) => {
   try {
@@ -148,9 +152,9 @@ app.get("/vendors", async (req, res) => {
       fullName: user.fullName,
       instagramHandle: user.instagramHandle,
       instagramLink: user.instagramLink,
-      businessName:user.businessName,
+      businessName: user.businessName,
       shopAddress: user.shopAddress,
-      email:user.email,
+      email: user.email,
       phoneNumber: user.phoneNumber,
       profile: user.profile?.toString("base64"),
       productImage: user.productImage?.toString("base64"),
@@ -160,6 +164,5 @@ app.get("/vendors", async (req, res) => {
     res.status(500).json({ msg: "Failed to fetch data" });
   }
 });
-
 
 export default app;

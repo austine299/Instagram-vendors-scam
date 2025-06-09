@@ -23,7 +23,7 @@ const Navbar = ({
       <div className="hidden sm:flex flex-row-reverse justify-start gap-4 w-full sm:w-1/2 p-4 mt-5 rounded-md">
         {user ? (
           <button
-            className="p-3 flex justify-center items-center px-4 sm:text-2xl hover:text-white text-black font-bold hover:bg-instacolor rounded-md"
+            className="p-3 flex justify-center items-center px-4 sm:text-2xl hover:text-white text-black font-bold hover:bg-blue-400 rounded-md"
             onClick={handleLogout}
           >
             Log out
@@ -34,8 +34,8 @@ const Navbar = ({
             onClick={handleActiveSignIn}
             className={
               activeSignIn
-                ? "p-3 flex justify-center items-center px-4 sm:text-2xl text-white font-bold bg-instacolor rounded-md"
-                : "p-3 flex justify-center items-center px-4 sm:text-2xl hover:text-white text-black font-bold hover:bg-instacolor rounded-md"
+                ? "p-3 flex justify-center items-center px-4 sm:text-2xl text-white font-bold bg-blue-400 rounded-md"
+                : "p-3 flex justify-center items-center px-4 sm:text-2xl hover:text-white text-black font-bold hover:bg-blue-400 rounded-md"
             }
           >
             Log in
@@ -49,8 +49,8 @@ const Navbar = ({
             onClick={handleActiveSignUP}
             className={
               activeSignUp
-                ? "p-3 flex justify-center items-center px-4 sm:text-2xl text-white font-bold bg-instacolor rounded-md"
-                : "p-3 flex justify-center items-center px-4 sm:text-2xl hover:text-white text-black font-bold hover:bg-instacolor rounded-md"
+                ? "p-3 flex justify-center items-center px-4 sm:text-2xl text-white font-bold bg-blue-400 rounded-md"
+                : "p-3 flex justify-center items-center px-4 sm:text-2xl hover:text-white text-black font-bold hover:bg-blue-400 rounded-md"
             }
           >
             sign up
@@ -61,8 +61,8 @@ const Navbar = ({
           onClick={handleActivebusiness}
           className={
             activeBusi
-              ? "p-3 flex justify-center items-center px-4 sm:text-2xl text-white font-bold bg-instacolor rounded-md"
-              : "p-3 flex justify-center items-center px-4 sm:text-2xl hover:text-white text-black font-bold hover:bg-instacolor rounded-md"
+              ? "p-3 flex justify-center items-center px-4 sm:text-2xl text-white font-bold bg-blue-400 rounded-md"
+              : "p-3 flex justify-center items-center px-4 sm:text-2xl hover:text-white text-black font-bold hover:bg-blue-400 rounded-md"
           }
         >
           Verify
@@ -70,10 +70,14 @@ const Navbar = ({
       </div>
       <div className="flex items-start flex-row-reverse py-5">
         <button className="sm:hidden " onClick={handleToggle}>
-          {toggle ? <X className="w-6 h-6 mr-5" /> : <Menu className="w-6 h-6 mr-5" />}
+          {toggle ? (
+            <X className="w-6 h-6 mr-5" />
+          ) : (
+            <Menu className="w-6 h-6 mr-5" />
+          )}
         </button>
         {toggle && (
-          <div className="sm:hidden absolute flex flex-col-reverse justify-end bg-white hover:shadow-2xl p-4 gap-4 w-fit mt-5 rounded-md">
+          <div className="sm:hidden absolute flex flex-col-reverse justify-end bg-white p-4 gap-4 w-fit mt-5 rounded-md">
             {user ? (
               <button
                 className="p-3 flex justify-center items-center px-4 sm:text-2xl hover:text-white text-black font-bold hover:bg-instacolor rounded-md"
@@ -87,8 +91,8 @@ const Navbar = ({
                 onClick={handleActiveSignIn}
                 className={
                   activeSignIn
-                    ? "p-3 flex justify-center items-center px-4 sm:text-2xl text-white font-bold bg-instacolor rounded-md"
-                    : "p-3 flex justify-center items-center px-4 sm:text-2xl hover:text-white text-black font-bold hover:bg-instacolor rounded-md"
+                    ? "p-3 flex justify-center items-center px-4 sm:text-2xl text-white font-bold bg-blue-400 rounded-md"
+                    : "p-3 flex justify-center items-center px-4 sm:text-2xl hover:text-white text-black font-bold hover:bg-blue-400 rounded-md"
                 }
               >
                 Log in
@@ -102,8 +106,8 @@ const Navbar = ({
                 onClick={handleActiveSignUP}
                 className={
                   activeSignUp
-                    ? "p-3 flex justify-center items-center px-4 sm:text-2xl text-white font-bold bg-instacolor rounded-md"
-                    : "p-3 flex justify-center items-center px-4 sm:text-2xl hover:text-white text-black font-bold hover:bg-instacolor rounded-md"
+                    ? "p-3 flex justify-center items-center px-4 sm:text-2xl text-white font-bold bg-blue-400 rounded-md"
+                    : "p-3 flex justify-center items-center px-4 sm:text-2xl hover:text-white text-black font-bold hover:bg-blue-400 rounded-md"
                 }
               >
                 sign up
