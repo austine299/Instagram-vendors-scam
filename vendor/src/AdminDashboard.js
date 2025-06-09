@@ -4,18 +4,26 @@ import axios from "axios";
 import Verify from "./images/verify.PNG";
 import Insta from "./images/instagram.png";
 import Navbar from "./Navbar.js";
+import Footer from "./Footer.js";
 
-function AdminDashboard({ handleLogout, fetchUser}) {
+function AdminDashboard({ handleLogout, fetchUser }) {
   const navigate = useNavigate();
   const [user, setUser] = useState("");
   const [account, setAccount] = useState([]);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // const handleLogout = () => {
-  //   localStorage.removeItem("token"); // Remove the JWT
-  //   navigate("/login");
-  // };
+  const isVerified =
+    user.fullName &&
+    user.instagramHandle &&
+    user.instagramLink &&
+    user.email &&
+    user.businessName &&
+    user.shopAddress &&
+    user.phoneNumber &&
+    user.productImage &&
+    user.profile !== null;
+
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -53,289 +61,173 @@ function AdminDashboard({ handleLogout, fetchUser}) {
   );
 
   return (
-    <div>
-      <div className="w-full p-4 justify-between bg-cover bg-slate-400 bg-center h-auto">
-        {user ? (
-          <></>
-        ) : (
-          <div className="mt-20 flex flex-col items-center bg-opacity-50 bg-slate-400 gap-8 p-4">
-            <h1 className="font-bold text-2xl sm:text-3xl">
+    <div className="min-h-screen bg-gray-50 pb-10">
+      <div className="w-full px-6 sm:px-12 pt-8">
+        {!user ? (
+          <section className="mt-20 text-center space-y-8 bg-white rounded-lg shadow-lg p-6">
+            <h1 className="text-3xl sm:text-4xl font-bold leading-snug">
               How{" "}
-              <span className="text-instacolor font-extrabold text-3xl sm:text-4xl">
-                Instagram Vendors
-              </span>{" "}
-              Can Make Their Customers{" "}
-              <span className="text-instacolor font-extrabold text-3xl sm:text-4xl">
-                Happy
-              </span>
+              <span className="text-instacolor">Instagram Vendors</span> Can
+              Make Their Customers{" "}
+              <span className="text-instacolor">Happy</span>
             </h1>
-            <p className="mt-3 sm:w-1/2 font-semibold text-xl font-sans bg-white bg-opacity-30 p-3 shadow-md">
-              In today’s fast-paced digital marketplace, Instagram vendors have
-              a unique opportunity to build strong, loyal customer bases by
-              going beyond just selling products — it’s about creating a
-              trustworthy, personalized experience. Here are key ways Instagram
-              vendors can keep their customers happy and coming back:
+            <p className="text-lg sm:w-2/3 mx-auto bg-white bg-opacity-60 p-4 shadow rounded-md">
+              Instagram vendors can stand out by building a brand of trust and
+              transparency. Here's how to make your customers come back again
+              and again.
             </p>
-            <span className="text-8xl text-center text-instacolor">
-              &#8595;
-            </span>
-          </div>
-        )}
-
-        {/* <span className="text-5xl hidden sm:block">&#8594;</span> */}
-      </div>
-
-      {/* Vendor Cards */}
-      <div className="w-full">
-        {loading && (
-          <div>
-            {user ? (
-              <div className="flex sm:flex-row flex-col w-full gap-4">
-                <div className="bg-white p-5 sm:w-1/2">
-                  {user.profile ? (
-                    <img
-                      src={`data:image/jpeg;base64,${user.profile}`}
-                      alt="Profile"
-                      className="w-24 h-24 object-cover rounded-full mt-4 border"
-                    />
+            <span className="text-6xl text-instacolor">&#8595;</span>
+          </section>
+        ) : (
+          <div className="mt-8 flex flex-col sm:flex-row gap-6">
+            {/* Profile Card */}
+            <div className="bg-white rounded-lg shadow-md p-6 w-full sm:w-1/2">
+              <div className="flex items-center gap-4 mb-4">
+                {user.profile ? (
+                  <img
+                    src={`data:image/jpeg;base64,${user.profile}`}
+                    alt="Profile"
+                    className="w-24 h-24 rounded-full object-cover border"
+                  />
+                ) : (
+                  <div className="w-24 h-24 rounded-full flex items-center justify-center border text-gray-400 text-sm">
+                    No Profile Image
+                  </div>
+                )}
+                <div>
+                  <h2 className="text-xl font-semibold">{user.fullName}</h2>
+                  {isVerified ? (
+                    <img src={Verify} className="w-6 mt-1" alt="Verified" />
                   ) : (
-                    <div className="w-24 h-24 mt-4 flex items-center justify-center text-center border rounded-full text-sm text-gray-400">
-                      No Profile Image
-                    </div>
+                    <Link to="/kyc" className="text-red-600 underline text-sm">
+                      Complete Verification ❌
+                    </Link>
                   )}
-                  <div>
-                    <div className="flex gap-3 items-center">
-                      <h2 className="text-xl font-bold">{user.fullName}</h2>
-                      {user.fullName &&
-                      user.instagramHandle &&
-                      user.instagramLink &&
-                      user.email &&
-                      user.businessName &&
-                      user.shopAddress &&
-                      user.phoneNumber &&
-                      user.productImage &&
-                      user.profile !== null ? (
-                        <div className="w-6">
-                          <img className="" src={Verify} />
-                        </div>
-                      ) : (
-                        <a href="#" className="text-red-500 underline">
-                          complete verification ❌{" "}
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                  <div className="flex gap-18 p-4 w-full">
-                    <div className="w-2/3">
-                      <p>
-                        {" "}
-                        <a
-                          href={user.instagramLink}
-                          className="text-xl text-blue-500"
-                        >
-                          @{user.instagramHandle}
-                        </a>
-                      </p>
-                      {user.instagramLink ? (
-                        <a
-                          href={user.instagramLink}
-                          className="text-xl underline text-blue-500 flex gap-2 items-center"
-                        >
-                          <img
-                            className="w-4 h4"
-                            src={Insta}
-                            alt="insta icon"
-                          />{" "}
-                          <span className="">go to my instagram page</span>
-                        </a>
-                      ) : (
-                        <span className="">
-                          <img
-                            className="w-4 h4"
-                            src={Insta}
-                            alt="insta icon"
-                          />
-                          No Link Provided
-                        </span>
-                      )}
-                      <p className="font-semibold">✍ {user.businessName}</p>
-                      <p className="font-semibold">🏠 {user.shopAddress}</p>
-                      <p className="font-semibold">📧 {user.email}</p>
-                      <p className="font-semibold">📞 {user.phoneNumber}</p>
-                      {/* Product Image */}
-
-                      <div className="">
-                        {user.fullName &&
-                        user.instagramHandle &&
-                        user.phoneNumber &&
-                        user.instagramLink &&
-                        user.email &&
-                        user.businessName &&
-                        user.shopAddress &&
-                        user.productImage &&
-                        user.profile !== null ? (
-                          <div className="w-full">
-                            <button className="">You are verified ✔️</button>
-                          </div>
-                        ) : (
-                          <div className="w-1/2 bg-blue-600 text-white mt-4 rounded-md text-center font-bold p-2">
-                            <Link to="/kyc" className="">
-                              complete verification
-                            </Link>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className=" w-1/4">
-                      {user.productImage ? (
-                        <>
-                          <p className="font-semibold">My product image</p>
-                          <img
-                            src={`data:image/png;base64,${user.productImage}`}
-                            alt="Product"
-                            className="w-full h-40 object-cover mt-4 border"
-                          />
-                        </>
-                      ) : (
-                        <div className="w-24 h-24 mt-4 flex items-center justify-center border text-sm text-gray-400">
-                          No Product Image
-                        </div>
-                      )}
-                    </div>
-                  </div>
                 </div>
               </div>
-            ) : (
-              <div className="p-4 flex flex-wrap w-full gap-2 text-gray-700 leading-relaxed space-y-3">
-                <div>
-                  <p className="w-full sm:w-72 bg-slate-400 bg-opacity-20 p-3 shadow-md">
-                    <strong>1. Be Responsive and Friendly in DMs</strong>
-                    <br />
-                    Timely and polite communication is crucial. Respond to
-                    inquiries within a reasonable time frame and use a friendly,
-                    respectful tone. Quick, helpful responses build trust and
-                    show that you value your customers.
-                  </p>
-                </div>
 
-                <div>
-                  <p className="w-full sm:w-72 bg-slate-400 bg-opacity-20 p-3 shadow-md">
-                    <strong>
-                      2. Post Clear and Honest Product Information
-                    </strong>
-                    <br />
-                    Use high-quality images and videos, and provide detailed
-                    descriptions including price, size, color options, delivery
-                    time, and terms. Avoid misleading edits or filters —
-                    transparency builds confidence and reduces returns or
-                    complaints.
-                  </p>
-                </div>
+              <div className="space-y-2 text-sm">
+                <p>
+                  <a
+                    href={user.instagramLink}
+                    className="text-blue-500 font-medium flex items-center gap-2"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img src={Insta} alt="Insta" className="w-4 h-4" />
+                    @{user.instagramHandle}
+                  </a>
+                </p>
+                <p className="font-medium">✍ {user.businessName}</p>
+                <p className="font-medium">🏠 {user.shopAddress}</p>
+                <p className="font-medium">📧 {user.email}</p>
+                <p className="font-medium">📞 {user.phoneNumber}</p>
 
-                <div>
-                  <p className="w-full sm:w-72 bg-slate-400 bg-opacity-20 p-3 shadow-md">
-                    <strong>3. Share Real Reviews and Customer Feedback</strong>
-                    <br />
-                    Nothing builds credibility like social proof. Share
-                    screenshots or repost stories from satisfied customers. This
-                    shows potential buyers that others trust your products and
-                    services.
+                {isVerified ? (
+                  <p className="mt-3 text-green-600 font-semibold">
+                    ✅ You are verified
                   </p>
-                </div>
-
-                <div>
-                  <p className="w-full sm:w-72 bg-slate-400 bg-opacity-20 p-3 shadow-md">
-                    <strong>4. Offer Smooth and Secure Payment Options</strong>
-                    <br />
-                    Make it easy for customers to pay by offering multiple
-                    secure options — such as mobile transfers, bank deposits, or
-                    third-party apps. Include payment instructions clearly and
-                    confirm once payment is received.
-                  </p>
-                </div>
-
-                <div>
-                  <p className="w-full sm:w-72 bg-slate-400 bg-opacity-20 p-3 shadow-md">
-                    <strong>5. Stick to Promised Delivery Timeframes</strong>
-                    <br />
-                    Always communicate expected delivery times honestly, and
-                    update customers if there are delays. Timely delivery is one
-                    of the biggest factors in a customer's experience.
-                  </p>
-                </div>
-
-                <div>
-                  <p className="w-full sm:w-72 bg-slate-400 bg-opacity-20 p-3 shadow-md">
-                    <strong>
-                      6. Package Products Neatly and Professionally
-                    </strong>
-                    <br />
-                    Your product’s packaging is the first physical interaction
-                    customers have with your brand. Neat, clean, and branded
-                    packaging shows professionalism and makes customers feel
-                    valued.
-                  </p>
-                </div>
-
-                <div>
-                  <p className="w-full sm:w-72 bg-slate-400 bg-opacity-20 p-3 shadow-md">
-                    <strong>7. Be Ready to Handle Complaints Gracefully</strong>
-                    <br />
-                    Mistakes happen — but how you handle them matters. Apologize
-                    sincerely, resolve the issue quickly, and offer fair
-                    solutions. Turning a bad situation into a positive one
-                    leaves a lasting impression.
-                  </p>
-                </div>
-
-                <div>
-                  <p className="w-full sm:w-72 bg-slate-400 bg-opacity-20 p-3 shadow-md">
-                    <strong>8. Reward Loyal Customers</strong>
-                    <br />
-                    Offer small perks like discounts, early access to products,
-                    or handwritten thank-you notes. These gestures foster
-                    loyalty and show appreciation.
-                  </p>
-                </div>
-
-                <div>
-                  <p className="w-full sm:w-72 bg-slate-400 bg-opacity-20 p-3 shadow-md">
-                    <strong>9. Stay Active and Authentic</strong>
-                    <br />
-                    Post consistently, share behind-the-scenes content,
-                    introduce yourself and your team, and engage with your
-                    community. The more real and relatable you are, the more
-                    connected your customers will feel.
-                  </p>
-                </div>
-
-                <div>
-                  <p className="w-full sm:w-72 bg-slate-400 bg-opacity-20 p-3 shadow-md">
-                    <strong>10. Collect Feedback and Keep Improving</strong>
-                    <br />
-                    Ask your customers for their opinions and take their
-                    suggestions seriously. Constant improvement shows customers
-                    that you care about their experience.
-                  </p>
-                </div>
-
-                <div>
-                  <p className="w-full sm:w-72 bg-slate-400 bg-opacity-20 p-3 shadow-md">
-                    <strong>Final Thoughts</strong>
-                    <br />
-                    Happy customers = repeat business + free marketing. When
-                    Instagram vendors focus on building relationships, not just
-                    making sales, they create a community that supports their
-                    growth long-term. 🌱
-                  </p>
-                </div>
+                ) : (
+                  <Link
+                    to="/kyc"
+                    className="inline-block mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-bold"
+                  >
+                    Complete Verification
+                  </Link>
+                )}
               </div>
-            )}
+            </div>
+
+            {/* Product Image */}
+            <div className="bg-white rounded-lg shadow-md p-6 w-full sm:w-1/2">
+              <h3 className="text-lg font-bold mb-2">My Product</h3>
+              {user.productImage ? (
+                <img
+                  src={`data:image/png;base64,${user.productImage}`}
+                  alt="Product"
+                  className="w-full h-64 object-cover rounded-md border"
+                />
+              ) : (
+                <div className="h-64 flex items-center justify-center border rounded-md text-gray-400">
+                  No Product Image
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Static Tips Section */}
+        {!user && (
+          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {tips.map((tip, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-lg shadow-md p-4 hover:shadow-2xl transition duration-300"
+              >
+                <h4 className="font-bold text-md mb-2">{tip.title}</h4>
+                <p className="text-sm text-gray-700">{tip.description}</p>
+              </div>
+            ))}
           </div>
         )}
       </div>
+      <Footer/>
     </div>
   );
 }
+
+const tips = [
+  {
+    title: "1. Be Responsive and Friendly in DMs",
+    description:
+      "Quick, respectful replies build trust. Be helpful and show you care.",
+  },
+  {
+    title: "2. Post Clear and Honest Product Info",
+    description:
+      "Use real photos and detailed descriptions. Avoid over-editing or misleading content.",
+  },
+  {
+    title: "3. Share Real Reviews",
+    description:
+      "Showcase customer feedback. Real reviews build confidence.",
+  },
+  {
+    title: "4. Offer Smooth Payment Options",
+    description:
+      "Provide easy and secure ways to pay. Confirm receipt clearly.",
+  },
+  {
+    title: "5. Deliver On Time",
+    description:
+      "Stick to promised delivery dates. Communicate clearly if delayed.",
+  },
+  {
+    title: "6. Neat Packaging Matters",
+    description:
+      "Professional packaging improves perception and adds delight.",
+  },
+  {
+    title: "7. Handle Complaints Gracefully",
+    description:
+      "Solve problems quickly and politely. Turn issues into loyalty.",
+  },
+  {
+    title: "8. Reward Loyal Customers",
+    description:
+      "Give small perks like discounts or shoutouts to keep them coming back.",
+  },
+  {
+    title: "9. Stay Active & Authentic",
+    description:
+      "Engage often. Share behind-the-scenes, and be human.",
+  },
+  {
+    title: "10. Keep Improving",
+    description:
+      "Ask for feedback. Keep adjusting and showing customers you care.",
+  },
+];
+
 
 export default AdminDashboard;
