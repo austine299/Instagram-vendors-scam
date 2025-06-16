@@ -198,7 +198,7 @@ app.post("/api/initiate-checkout", async (req, res) => {
         currency: "NGN",
         reference,
         redirect_url:
-          "http://localhost:3000/#/confirmOrder",
+          "https://instagram-vendors-frontend.onrender.com/#/confirmOrder",
         customer,
         metadata: {
           vendorId,
