@@ -257,43 +257,27 @@ app.get("/api/orders", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch orders" });
   }
 });
-
 app.post("/api/confirm-delivery", async (req, res) => {
   const { orderId } = req.body;
 
-  const order = await Order.findOne({ orderId }).populate("vendorId");
-  if (!order || order.vendorPaid)
-    return res.status(400).json({ error: "Invalid order" });
-
-  const { accountNumber, bankCode, fullName } = order.vendorId;
-
-  await axios.post(
-    "https://api-sandbox.korapay.com/checkout",
-
-    {
-      reference: `payout_${Date.now()}`,
-      amount: order.amount,
-      currency: "NGN",
-      recipient: {
-        type: "bank_account",
-        name: fullName,
-        account_number: accountNumber,
-        bank_code: bankCode,
-      },
-      narration: `Escrow payout for Order ${order.orderId}`,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${process.env.KORAPAY_SECRET_KEY}`,
-      },
+  try {
+    const order = await Order.findOne({ orderId });
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
     }
-  );
 
-  order.status = "paid_to_vendor";
-  order.vendorPaid = true;
-  order.deliveryConfirmedByCustomer = true;
-  await order.save();
+    if (order.deliveryConfirmedByCustomer) {
+      return res.status(400).json({ error: "Order already confirmed" });
+    }
 
-  res.json({ message: "Payout completed" });
+    order.deliveryConfirmedByCustomer = true;
+    await order.save();
+
+    return res.json({ message: "Delivery confirmed successfully." });
+  } catch (err) {
+    console.error("Confirm Delivery Error:", err);
+    return res.status(500).json({ error: "Server error while confirming delivery." });
+  }
 });
+
 export default app;

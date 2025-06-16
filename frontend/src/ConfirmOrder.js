@@ -36,7 +36,7 @@ const OrderConfirmation = () => {
         const res = await axios.get(
           `${baseURL}/api/orders?vendorId=${selectedVendor}`
         );
-        console.log("Fetched orders:", res.data); 
+        console.log("Fetched orders:", res.data);
         setOrders(res.data);
       } catch (err) {
         console.error("Failed to load orders", err);
@@ -53,14 +53,12 @@ const OrderConfirmation = () => {
     }
   }, [message]);
 
-  // Handle order selection
   const handleOrderSelection = (e) => {
     const selectedId = e.target.value;
     setSelectedOrder(selectedId);
     setOrderId(selectedId);
   };
 
-  // Handle confirmation
   const handleConfirmDelivery = async () => {
     if (!orderId) return;
     setLoading(true);
@@ -82,6 +80,7 @@ const OrderConfirmation = () => {
       setSelectedOrder("");
       setOrderId("");
     } catch (err) {
+      console.error("❌ Delivery confirmation error:", err);
       setMessage(err.response?.data?.error || "Error confirming delivery");
     } finally {
       setLoading(false);
@@ -106,7 +105,7 @@ const OrderConfirmation = () => {
         <option value="">Select a Vendor</option>
         {vendors.map((vendor) => (
           <option key={vendor._id} value={vendor._id}>
-            {vendor.fullName} ({vendor.instagramHandle})
+            {vendor.fullName} (@{vendor.instagramHandle})
           </option>
         ))}
       </select>
@@ -145,6 +144,12 @@ const OrderConfirmation = () => {
             <strong>Confirmed:</strong>{" "}
             {currentOrder.deliveryConfirmedByCustomer ? "Yes ✅" : "No"}
           </p>
+        </div>
+      )}
+
+      {alreadyConfirmed && (
+        <div className="text-yellow-600 text-sm mb-2">
+          ⚠️ This order has already been confirmed.
         </div>
       )}
 
