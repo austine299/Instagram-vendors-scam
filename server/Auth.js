@@ -3,8 +3,12 @@ import bcrypt from "bcryptjs";
 import cors from "cors";
 import connectDB from "./db.js";
 import User from "./user.js";
+import Order from "./order.js";
 import multer from "multer";
 import jwt from "jsonwebtoken";
+import axios from "axios";
+import dotenv from "dotenv";
+dotenv.config();
 
 // Configure storage
 const storage = multer.memoryStorage(); // Or use diskStorage to save to disk
@@ -44,6 +48,10 @@ app.post(
       email,
       phoneNumber,
       password,
+      bankName,
+      bankCode,
+      accountNumber,
+      accountName,
     } = req.body;
     const existing = await User.findOne({ instagramHandle });
     if (existing) return res.status(400).json({ msg: "User already exists" });
@@ -67,6 +75,10 @@ app.post(
       shopAddress,
       email,
       password: hashedPassword,
+      bankName,
+      bankCode,
+      accountNumber,
+      accountName,
       profile: profileBase64,
       productImage: productBase64,
     });
@@ -165,4 +177,127 @@ app.get("/vendors", async (req, res) => {
   }
 });
 
+app.post("/api/initiate-checkout", async (req, res) => {
+  const { amount, customer, vendorId, productDescription } = req.body;
+  const reference = `order_${Date.now()}`;
+
+  console.log("✅ Initiating Korapay Checkout with:", {
+    amount,
+    customer,
+    vendorId,
+    productDescription,
+    reference,
+  });
+
+  try {
+    const response = await axios.post(
+  "https://api-sandbox.korapay.com/merchant/api/v1/checkout",
+      {
+        amount,
+        currency: "NGN",
+        reference,
+        redirect_url:  "https://instagram-vendors-frontend.onrender.com/confirmOrder",
+        customer,
+        metadata: {
+          vendorId,
+          productDescription,
+        },
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.KORAPAY_SECRET_KEY}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log("✅ Korapay full response:", response.status, response.headers, response.data);
+
+
+    console.log("✅ Full Korapay raw response:", response.data);
+
+    const checkoutUrl = response?.data?.data?.checkout_url;
+
+    if (!checkoutUrl) {
+      return res.status(500).json({
+        error: "❌ Korapay did not return a checkout_url",
+        raw: response.data,
+      });
+    }
+
+    await Order.create({
+      orderId: reference,
+      customer,
+      vendorId,
+      amount,
+      productDescription,
+      status: "pending_payment",
+    });
+
+    res.json({ checkoutUrl });
+  } catch (err) {
+    console.error("❌ Korapay error:", err.response?.data || err.message);
+    res.status(500).json({
+      error: err.response?.data || "Failed to initiate payment",
+    });
+  }
+});
+
+app.post("/api/payment-webhook", async (req, res) => {
+  const { event, data } = req.body;
+
+  if (event === "charge.success") {
+    const reference = data.reference;
+
+    await Order.findOneAndUpdate(
+      { orderId: reference },
+      { status: "pending_delivery", paymentConfirmed: true }
+    );
+  }
+
+  res.sendStatus(200);
+});
+
+app.get("/api/orders", async (req, res) => {
+  const { vendorId } = req.query;
+  const orders = await Order.find({ vendorId, status: "pending_delivery" });
+  res.json(orders);
+});
+
+app.post("/api/confirm-delivery", async (req, res) => {
+  const { orderId } = req.body;
+
+  const order = await Order.findOne({ orderId }).populate("vendorId");
+  if (!order || order.vendorPaid)
+    return res.status(400).json({ error: "Invalid order" });
+
+  const { accountNumber, bankCode, fullName } = order.vendorId;
+
+  await axios.post(
+    "https://api.korapay.com/merchant/api/v1/transfers",
+    {
+      reference: `payout_${Date.now()}`,
+      amount: order.amount,
+      currency: "NGN",
+      recipient: {
+        type: "bank_account",
+        name: fullName,
+        account_number: accountNumber,
+        bank_code: bankCode,
+      },
+      narration: `Escrow payout for Order ${order.orderId}`,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.KORAPAY_SECRET_KEY}`,
+      },
+    }
+  );
+
+  order.status = "paid_to_vendor";
+  order.vendorPaid = true;
+  order.deliveryConfirmedByCustomer = true;
+  await order.save();
+
+  res.json({ message: "Payout completed" });
+});
 export default app;

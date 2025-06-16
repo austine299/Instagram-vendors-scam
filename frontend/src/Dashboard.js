@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Footer from "./Footer.js";
 
@@ -30,7 +30,7 @@ function Dashboard() {
   process.env.NODE_ENV === "development"
     ? "http://localhost:5000"
     : "https://instagram-vendors-server.onrender.com";
-    
+
   useEffect(() => {
     axios
       .get(`${baseURL}/vendors`)
@@ -170,7 +170,9 @@ function Dashboard() {
                       <strong>📞</strong> {vendor.phoneNumber}
                     </p>
                   </div>
-
+                    <Link to='/orderPage'>
+                    Order Now
+                    </Link>
                   <button
                     onClick={() =>
                       setDisplayProductId(
@@ -217,3 +219,62 @@ function Dashboard() {
 }
 
 export default Dashboard;
+
+
+
+
+
+
+
+// import React from "react";
+// import { useKorapay, KorapayButton } from "react-korapay";
+
+// const config = {
+//   public_key: "pk_test_your_public_key", // Replace with your actual public key
+//   amount: 2000,
+//   customer: {
+//     name: "John Doe",
+//     email: "johndoe@example.com",
+//   },
+//   narration: "Payout for services",
+// };
+
+// function App() {
+//   const korapayBtnConfig = {
+//     ...config,
+//     onClose: () => {
+//       console.log("Payment modal closed");
+//     },
+//     onSuccess: () => {
+//       console.log("Payment successful");
+//     },
+//     text: "Pay with Korapay!",
+//   };
+
+//   const handleKorapay = useKorapay(config);
+
+//   return (
+//     <div>
+//       <h1>Korapay Payout Integration</h1>
+//       <div>
+//         <button
+//           onClick={() =>
+//             handleKorapay({
+//               onClose: () => {
+//                 console.log("Payment modal closed");
+//               },
+//               onSuccess: () => {
+//                 console.log("Payment successful");
+//               },
+//             })
+//           }
+//         >
+//           Pay now!
+//         </button>
+//         <KorapayButton {...korapayBtnConfig} />
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default App;

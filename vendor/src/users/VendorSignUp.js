@@ -41,6 +41,10 @@ function VendorSignUp() {
     formData.append("password", form.password);
     formData.append("profile", form.profile); // input[type="file"]
     formData.append("productImage", form.productImage);
+    formData.append("bankName", form.bankName);
+    formData.append("bankCode", form.bankCode);
+    formData.append("accountNumber", form.accountNumber);
+    formData.append("accountName", form.accountName);
 
 
     const baseURL =
@@ -72,6 +76,10 @@ function VendorSignUp() {
       confirmPassword: "",
       productImage: null,
       profile: null,
+      bankName: "",
+      bankCode: "",
+      accountNumber: "",
+      accountName: "",
     });
   };
 
@@ -154,6 +162,30 @@ function VendorSignUp() {
             type="text"
             placeholder="Phone Number"
             onChange={(e) => setForm({ ...form, phoneNumber: e.target.value })}
+          />
+          <input
+            className="w-full h-12 p-3 border-4 rounded-md"
+            type="text"
+            placeholder="bankName"
+            onChange={(e) => setForm({ ...form, bankName: e.target.value })}
+          />
+          <input
+            className="w-full h-12 p-3 border-4 rounded-md"
+            type="text"
+            placeholder="accountNumber"
+            onChange={(e) => setForm({ ...form, accountNumber: e.target.value })}
+          />
+          <input
+            className="w-full h-12 p-3 border-4 rounded-md"
+            type="text"
+            placeholder="accountName"
+            onChange={(e) => setForm({ ...form, accountName: e.target.value })}
+          />
+          <input
+            className="w-full h-12 p-3 border-4 rounded-md"
+            type="text"
+            placeholder="bankCode"
+            onChange={(e) => setForm({ ...form, bankCode: e.target.value })}
           />
 
           <div className="flex  items-center justify-around w-auto h-auto border-2 border-dashed rounded-lg bg-slate-50 p-4">
