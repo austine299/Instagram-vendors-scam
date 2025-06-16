@@ -170,8 +170,8 @@ function Dashboard() {
                       <strong>📞</strong> {vendor.phoneNumber}
                     </p>
                   </div>
-                    <Link to='/orderPage'>
-                    Order Now
+                    <Link to='/orderPage' className="underline text-blue-600">
+                    Pay Vendor
                     </Link>
                   <button
                     onClick={() =>

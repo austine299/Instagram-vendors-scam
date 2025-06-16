@@ -191,12 +191,14 @@ app.post("/api/initiate-checkout", async (req, res) => {
 
   try {
     const response = await axios.post(
-  "https://api-sandbox.korapay.com/merchant/api/v1/checkout",
+      "https://api.korapay.com/merchant/api/v1/charges/initialize",
+
       {
         amount,
         currency: "NGN",
         reference,
-        redirect_url:  "https://instagram-vendors-frontend.onrender.com/confirmOrder",
+        redirect_url:
+          "http://localhost:3000/#/confirmOrder",
         customer,
         metadata: {
           vendorId,
@@ -210,19 +212,6 @@ app.post("/api/initiate-checkout", async (req, res) => {
         },
       }
     );
-    console.log("✅ Korapay full response:", response.status, response.headers, response.data);
-
-
-    console.log("✅ Full Korapay raw response:", response.data);
-
-    const checkoutUrl = response?.data?.data?.checkout_url;
-
-    if (!checkoutUrl) {
-      return res.status(500).json({
-        error: "❌ Korapay did not return a checkout_url",
-        raw: response.data,
-      });
-    }
 
     await Order.create({
       orderId: reference,
@@ -232,7 +221,7 @@ app.post("/api/initiate-checkout", async (req, res) => {
       productDescription,
       status: "pending_payment",
     });
-
+    const checkoutUrl = response.data.data.checkout_url;
     res.json({ checkoutUrl });
   } catch (err) {
     console.error("❌ Korapay error:", err.response?.data || err.message);
@@ -258,9 +247,15 @@ app.post("/api/payment-webhook", async (req, res) => {
 });
 
 app.get("/api/orders", async (req, res) => {
-  const { vendorId } = req.query;
-  const orders = await Order.find({ vendorId, status: "pending_delivery" });
-  res.json(orders);
+   try {
+    const { vendorId } = req.query;
+    if (!vendorId) return res.status(400).json({ error: "Vendor ID is required" });
+
+    const orders = await Order.find({ vendorId});
+    res.json(orders);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch orders" });
+  }
 });
 
 app.post("/api/confirm-delivery", async (req, res) => {
@@ -273,7 +268,8 @@ app.post("/api/confirm-delivery", async (req, res) => {
   const { accountNumber, bankCode, fullName } = order.vendorId;
 
   await axios.post(
-    "https://api.korapay.com/merchant/api/v1/transfers",
+    "https://api-sandbox.korapay.com/checkout",
+
     {
       reference: `payout_${Date.now()}`,
       amount: order.amount,

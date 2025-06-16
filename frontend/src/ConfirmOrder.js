@@ -15,10 +15,8 @@ const OrderConfirmation = () => {
       ? "http://localhost:5000"
       : "https://instagram-vendors-server.onrender.com";
 
-
-
+  // Fetch vendors
   useEffect(() => {
-    // Fetch vendors on load
     const fetchVendors = async () => {
       try {
         const res = await axios.get(`${baseURL}/vendors`);
@@ -30,12 +28,15 @@ const OrderConfirmation = () => {
     fetchVendors();
   }, []);
 
+  // Fetch orders when vendor is selected
   useEffect(() => {
-    // Fetch orders when vendor is selected
     const fetchOrders = async () => {
       if (!selectedVendor) return;
       try {
-        const res = await axios.get(`${baseURL}/api/orders?vendorId=${selectedVendor}`);
+        const res = await axios.get(
+          `${baseURL}/api/orders?vendorId=${selectedVendor}`
+        );
+        console.log("Fetched orders:", res.data); 
         setOrders(res.data);
       } catch (err) {
         console.error("Failed to load orders", err);
@@ -44,12 +45,22 @@ const OrderConfirmation = () => {
     fetchOrders();
   }, [selectedVendor]);
 
+  // Auto-clear messages
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => setMessage(""), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
+  // Handle order selection
   const handleOrderSelection = (e) => {
     const selectedId = e.target.value;
     setSelectedOrder(selectedId);
-    setOrderId(selectedId); // auto-fill
+    setOrderId(selectedId);
   };
 
+  // Handle confirmation
   const handleConfirmDelivery = async () => {
     if (!orderId) return;
     setLoading(true);
@@ -57,9 +68,19 @@ const OrderConfirmation = () => {
 
     try {
       const res = await axios.post(`${baseURL}/api/confirm-delivery`, {
-        orderId
+        orderId,
       });
       setMessage(res.data.message);
+
+      // Refresh orders
+      const updated = await axios.get(
+        `${baseURL}/api/orders?vendorId=${selectedVendor}`
+      );
+      setOrders(updated.data);
+
+      // Clear selection
+      setSelectedOrder("");
+      setOrderId("");
     } catch (err) {
       setMessage(err.response?.data?.error || "Error confirming delivery");
     } finally {
@@ -67,9 +88,14 @@ const OrderConfirmation = () => {
     }
   };
 
+  const currentOrder = orders.find((o) => o.orderId === selectedOrder);
+  const alreadyConfirmed = currentOrder?.deliveryConfirmedByCustomer;
+
   return (
     <div className="p-4 max-w-md mx-auto mt-10 bg-white shadow rounded">
-      <h2 className="text-xl font-semibold mb-4">Confirm You Received Your Order</h2>
+      <h2 className="text-xl font-semibold mb-4">
+        Confirm You Received Your Order
+      </h2>
 
       <label className="block mb-2 font-medium">Select Vendor:</label>
       <select
@@ -85,42 +111,60 @@ const OrderConfirmation = () => {
         ))}
       </select>
 
-      {orders.length > 0 && (
-        <>
-          <label className="block mb-2 font-medium">Select Your Order:</label>
-          <select
-            className="border p-2 w-full mb-4"
-            value={selectedOrder}
-            onChange={handleOrderSelection}
-          >
-            <option value="">Select an Order</option>
-            {orders.map((order) => (
-              <option key={order.orderId} value={order.orderId}>
-                {order.productDescription} - #{order.orderId}
-              </option>
-            ))}
-          </select>
-        </>
-      )}
-
-      <label className="block mb-2 font-medium">Order ID (auto-filled):</label>
-      <input
-        type="text"
-        placeholder="Enter Order ID"
-        value={orderId}
-        onChange={(e) => setOrderId(e.target.value)}
+      <label className="block mb-2 font-medium">Select Your Order:</label>
+      <select
         className="border p-2 w-full mb-4"
-      />
+        value={selectedOrder}
+        onChange={handleOrderSelection}
+      >
+        <option value="">Select an Order</option>
+        {orders.map((order) => (
+          <option
+            key={order.orderId}
+            value={order.orderId}
+            disabled={order.deliveryConfirmedByCustomer}
+          >
+            {order.productDescription} - #{order.orderId}
+            {order.deliveryConfirmedByCustomer ? " ✅ Confirmed" : ""}
+          </option>
+        ))}
+      </select>
+
+      {selectedOrder && currentOrder && (
+        <div className="mb-4 text-sm text-gray-700">
+          <p>
+            <strong>Product:</strong> {currentOrder.productDescription}
+          </p>
+          <p>
+            <strong>Amount:</strong> ₦{currentOrder.amount.toLocaleString()}
+          </p>
+          <p>
+            <strong>Status:</strong> {currentOrder.status}
+          </p>
+          <p>
+            <strong>Confirmed:</strong>{" "}
+            {currentOrder.deliveryConfirmedByCustomer ? "Yes ✅" : "No"}
+          </p>
+        </div>
+      )}
 
       <button
         onClick={handleConfirmDelivery}
-        className="bg-green-600 text-white px-4 py-2 rounded"
-        disabled={loading || !orderId}
+        className={`px-4 py-2 rounded text-white w-full ${
+          alreadyConfirmed || !orderId
+            ? "bg-gray-400 cursor-not-allowed"
+            : "bg-green-600 hover:bg-green-700"
+        }`}
+        disabled={loading || !orderId || alreadyConfirmed}
       >
         {loading ? "Processing..." : "I've Received My Order"}
       </button>
 
-      {message && <p className="mt-4 text-sm text-gray-700">{message}</p>}
+      {message && (
+        <p className="mt-4 text-sm text-green-600 flex items-center gap-2">
+          ✅ {message}
+        </p>
+      )}
     </div>
   );
 };

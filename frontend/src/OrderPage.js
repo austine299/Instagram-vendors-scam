@@ -54,8 +54,8 @@ export default function CustomerOrderPage() {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-4">
-      <h2 className="text-xl font-bold mb-4">Pay Vendor (Escrow)</h2>
+    <div className="flex flex-col justify-center max-w-xl mx-auto p-4 h-screen">
+      <h2 className="text-xl font-bold mb-4 mx-auto">Pay Vendor</h2>
 
       <label className="block mb-1 font-medium">Select Vendor:</label>
       <select
